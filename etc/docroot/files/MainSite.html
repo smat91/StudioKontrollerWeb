@@ -1,0 +1,225 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="refresh" content="10">
+<title>MainSite</title>
+<link href="WebGuiStyleSheet.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+	<div class="main">
+		<div id="divHeader">
+			<header>
+				Studiokontroller	
+			</header>
+			<hr id="hrHeader">
+		</div>
+		<div class="divControlls">
+			<div id="divLights">
+				<block  class="divLightsControlls" id="divLighting" >
+					<label class="labelButtons" for="divLighting">Deckenbeleuchtung</label>
+						<form method="POST" action="/files/MainSite">
+							<input type="submit" onClick="setInLighting()" class="{valLighting}" value="EIN/AUS"/>
+							<input type="hidden" name="inLighting" id="inLightingId"/>
+							<script>
+								function setInLighting(){
+									if (document.getElementById('inLightingId').value != "true") {
+										document.getElementById('inLightingId').value = "true";	
+									}
+								window.location.reload(false); 
+								}
+							</script>
+						</form>
+				</block>
+				<block  class="divLightsControlls" id="divInfoSign" >
+					<label class="labelButtons" for="divInfoSign">Infoschild</label>
+						<form method="POST" action="/files/MainSite">
+							<input type="submit" onClick="setInInfoSign()" class="{valInfoSign}" value="EIN/AUS"/>
+							<input type="hidden" name="inInfoSign" id="inInfoSignId" />
+							<script>
+								function setInInfoSign(){
+									if (document.getElementById('inInfoSignId').value != "true") {
+										document.getElementById('inInfoSignId').value = "true";	
+									}
+								window.location.reload(false); 
+								}
+							</script>
+						</form>
+				</block>
+			</div>
+			<hr>
+		</div>		
+		<div class="divControlls">
+			<div id="divWallPlugs">
+				<block  class="divWallplugControlls" id="divWallPlugLeft" >
+					<label class="labelButtons" for="divWallPlugLeft">Steckdose links</label>
+						<form method="POST" action="/files/MainSite">
+							<input type="submit" onClick="setInWallPlugLeft()" class="{valWallPlugLeft}" value="EIN/AUS"/>
+							<input type="hidden" name="inWallPlugLeft" id="inWallPlugLeftId" />
+							<script>
+								function setInWallPlugLeft(){
+									if (document.getElementById('inWallPlugLeftId').value != "true") {
+										document.getElementById('inWallPlugLeftId').value = "true";	
+									}
+								window.location.reload(false); 
+								}
+							</script>	
+						</form>
+				</block>
+				<block  class="divWallplugControlls" id="divWallPlugRight" >
+					<label class="labelButtons" for="divWallPlugRight">Steckdose rechts</label>
+						<form method="POST" action="/files/MainSite">
+							<input type="submit" onClick="setInWallPlugRight()" class="{valWallPlugRight}" value="EIN/AUS"/>
+							<input type="hidden" name="inWallPlugRight" id="inWallPlugRightId" />
+							<script>
+								function setInWallPlugRight(){
+									if (document.getElementById('inWallPlugRightId').value != "true") {
+										document.getElementById('inWallPlugRightId').value = "true";	
+									}
+								window.location.reload(false); 
+								}
+							</script>
+						</form>
+				</block>
+			</div>
+			<hr>
+		</div>
+		<div class="divControlls">
+			<div id="divNeonFlex">
+				<block class="divNeonFlexControlls" id="divNeonFlexOnOff">
+					<label class="labelButtons" for="divNeonFlexOnOff">Neonflex</label>
+						<form method="POST" action="/files/MainSite">
+							<input type="submit" onClick="setInNeonFlexOnOff()" class="{valNeonFlexOnOff}" value="EIN/AUS"/>
+							<input type="hidden" name="inNeonFlexOnOff" id="inNeonFlexOnOffId" />
+							<script>
+								function setInNeonFlexOnOff(){
+									if (document.getElementById('inNeonFlexOnOffId').value != "true") {
+										document.getElementById('inNeonFlexOnOffId').value = "true";	
+									}
+								window.location.reload(false); 
+								}
+							</script>
+						</form>
+				</block>
+				<block class="divNeonFlexControlls" id="divColorSelectionOnOff">
+					<label class="labelButtons" for="divColorSelectionOnOff">Farbauswahl</label>
+                                                <form method="POST" action="/files/MainSite" id="formColorSelection">
+							<div class="divSliderButtons">
+                                                                <input type="submit" id="ColorSelection" onClick="setInColorSelectionOnOff()" class="{valColorSelectionOnOff}" value="EIN/AUS"/>
+							</div>
+							<input type="hidden" name="inColorSelectionOnOff" id="inColorSelectionOnOffId" />
+							<script>
+								function setInColorSelectionOnOff(){
+									if (document.getElementById('inColorSelectionOnOffId').value != "true") {
+										document.getElementById('inColorSelectionOnOffId').value = "true";	
+									}
+								window.location.reload(false); 
+								}
+							</script>
+							<div class="divSliders">
+								<div class="divSlider">
+									<hr class="hrSlider" id="hrHue">
+                                                                        <input onClick="setInHue()" type="range" min="0" max="360" value="{valHue}" class="slider" name="inHue" id="Hue">
+                                                                        <input type="hidden" name="inHueChange" id="inHueChangeId" />
+                                                                        <script>
+                                                                                function setInHue(){
+                                                                                        if (document.getElementById('inHueChangeId').value != "true") {
+                                                                                                document.getElementById('inHueChangeId').value = "true";
+                                                                                        }
+                                                                                        document.getElementById("formColorSelection").submit();
+                                                                                }
+                                                                        </script>
+								</div>
+								<div class="divSlider">
+									<hr class="hrSlider" id="hrSaturation">
+                                                                        <input onClick="setInSaturation()" type="range" min="0" max="255" value="{valSaturation}" class="slider" name="inSaturation" id="Saturation">
+                                                                        <input type="hidden" name="inSaturationChange" id="inSaturationChangeId" />
+                                                                        <script>
+                                                                                function setInSaturation(){
+                                                                                        if (document.getElementById('inSaturationChangeId').value != "true") {
+                                                                                                document.getElementById('inSaturationChangeId').value = "true";
+                                                                                        }
+                                                                                        document.getElementById("formColorSelection").submit();
+                                                                                }
+                                                                        </script>
+								</div>	
+								<div class="divSlider">	
+                                                                        <hr class="hrSlider" id="hrValue">
+                                                                        <input onClick="setInValue()" type="range" min="0" max="255" value="{valValue}" class="slider" name="inValue" id="value">
+                                                                        <input type="hidden" name="inValueChange" id="inValueChangeId" />
+                                                                        <script>
+                                                                                function setInValue(){
+                                                                                        if (document.getElementById('inValueChangeId').value != "true") {
+                                                                                                document.getElementById('inValueChangeId').value = "true";
+                                                                                        }
+                                                                                        document.getElementById("formColorSelection").submit();
+                                                                                }
+                                                                        </script>
+								</div>	
+							</div>
+						</form>
+				</block>
+				<block class="divNeonFlexControlls" id="divColorChangeOnOff">
+					<label class="labelButtons" for="divColorChangeOnOff">Farbwechsel</label>
+                                                <form method="POST" action="/files/MainSite" id="formColorChange">
+							<div class="divSliderButtons">
+                                                                <input type="submit" id="ColorChange" onClick="setInColorChangeOnOff()" class="{valColorChangeOnOff}" value="EIN/AUS"/>
+							</div>
+							<input type="hidden" name="inColorChangeOnOff" id="inColorChangeOnOffId" />
+							<script>
+								function setInColorChangeOnOff(){
+									if (document.getElementById('inColorChangeOnOffId').value != "true") {
+										document.getElementById('inColorChangeOnOffId').value = "true";	
+									}
+								window.location.reload(false); 
+								}
+							</script>
+							<div class="divSliders">
+								<div class="divSlider">
+									<div class="divSlider" id="divSpeed">Geschwindigkeit</div>
+                                                                        <input onClick="setInSpeed()" type="range" min="1" max="100" value="{valSpeed}" class="slider" name="inSpeed" id="Speed">
+                                                                        <input type="hidden" name="inSpeedChange" id="inSpeedChangeId" />
+                                                                        <script>
+                                                                                function setInSpeed(){
+                                                                                        if (document.getElementById('inSpeedChangeId').value != "true") {
+                                                                                                document.getElementById('inSpeedChangeId').value = "true";
+                                                                                        }
+                                                                                        document.getElementById("formColorChange").submit();
+                                                                                }
+                                                                        </script>
+                                                                </div>
+							</div>
+						</form>
+				</block>
+			</div>
+			<hr>
+		</div>
+	</div>
+	<script>
+		if (document.getElementById('ColorChange').className == "true") {
+			document.getElementById('ColorSelection').disabled = true;
+                        document.getElementById('SetColorSelection').disabled = true;
+			document.getElementById('Hue').disabled = true;
+			document.getElementById('Saturation').disabled = true;
+			document.getElementById('value').disabled = true;
+		}
+		else {
+			document.getElementById('ColorSelection').disabled = false;
+                        document.getElementById('SetColorSelection').disabled = false;
+			document.getElementById('Hue').disabled = false;
+			document.getElementById('Saturation').disabled = false;
+			document.getElementById('value').disabled = false;
+		}
+		if (document.getElementById('ColorSelection').className == "true") {
+			document.getElementById('ColorChange').disabled = true;
+                        document.getElementById('SetColorChange').disabled = true;
+			document.getElementById('Speed').disabled = true;
+		}
+		else {
+			document.getElementById('ColorChange').disabled = false;
+                        document.getElementById('SetColorChange').disabled = false;
+			document.getElementById('Speed').disabled = false;
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="refresh" content="10">
+<title>TouchPanel</title>
+<style type="text/css">
+</style>
+<link href="WebGuiStyleSheet.css" rel="stylesheet" type="text/css">
+</head>	
+<body>
+	<div id="divHeader">
+		<header id="demo">
+			Studiokontroller	
+		</header>
+		<hr id="hrHeader">
+	</div>	
+	<div  class="divControlls" id="divLighting" http-equiv="refresh" content="2">
+		<label class="labelButtons" for="divLighting">Deckenbeleuchtung</label>
+		<form method="POST" action="/files/TouchPanel">
+                        <input type="submit" onClick="setInLighting()" class="{valLighting}" value="EIN/AUS"  id= "buttonTouchPanel"/>
+			<input type="hidden" name="inLighting" id="inLightingId"/>
+			<script>
+				function setInLighting(){
+					if (document.getElementById('inLightingId').value != "true") {
+						document.getElementById('inLightingId').value = "true";	
+					}
+				window.location.reload(false); 
+				}
+			</script>
+		</form>
+		<hr>
+	</div>
+</body>
+</html>
