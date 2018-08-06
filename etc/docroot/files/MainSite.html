@@ -194,6 +194,24 @@
 			</div>
 			<hr>
 		</div>
+		<div class="divControllsShutdown">
+			<div id="divShutdown">
+				<block  class="divShutdownControlls" id="idShutdown" >
+						<form method="POST" action="/files/MainSite">
+							<input id="ShutdownButton" type="submit" onClick="setInShutdown()" value="off"/>
+							<input type="hidden" name="inShutdown" id="inShutdownId"/>
+							<script>
+								function setInShutdown(){
+									if (document.getElementById('inShutdownId').value != "true") {
+										document.getElementById('inShutdownId').value = "true";	
+									}
+								window.location.reload(false); 
+								}
+							</script>
+						</form>
+				</block>
+			</div>
+		</div>	
 	</div>
 	<script>
 		if (document.getElementById('ColorChange').className == "true") {

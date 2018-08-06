@@ -1,6 +1,7 @@
 #include "requestmapper.h"
 #include "datatemplatecontrollerTouchPanel.h"
 #include "template.h"
+#include "webguiinputcontroller.h"
 
 DataTemplateControllerTouchPanel::DataTemplateControllerTouchPanel(QObject* parent)
     : HttpRequestHandler(parent) {
@@ -18,23 +19,7 @@ void DataTemplateControllerTouchPanel::service(GuiParameters* guiPar, HttpReques
     Template t=RequestMapper::templateCache->getTemplate("files/TouchPanel",language);
 
     // process value for lighting
-    if (inLighting == "true") {
-        if (guiPar->LightingOnOff == false) {
-            guiPar->LightingOnOff = true;
-            t.setVariable("valLighting","true");
-        }
-        else {
-            guiPar->LightingOnOff = false;
-            t.setVariable("valLighting","false");
-        }
-    }
-    else {
-        if (guiPar->LightingOnOff == false) {
-            t.setVariable("valLighting","false");
-        }
-        else {
-            t.setVariable("valLighting","true");
-        }
-    }
+    guiPar->LightingOnOff = Button(inLighting, "valLighting", &t, guiPar->LightingOnOff).out();
+
     response.write(t.toUtf8(),true);
 }

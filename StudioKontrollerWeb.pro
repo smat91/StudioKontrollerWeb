@@ -17,7 +17,8 @@ SOURCES += src/main.cpp \
     src/requestmapper.cpp \
     src/datatemplatecontrollerTouchPanel.cpp \
     src/datatemplatecontrollerMainSite.cpp \
-    src/gpiocontroller.cpp
+    src/gpiocontroller.cpp \
+    src/webguiinputcontroller.cpp
 
 DISTFILES += \
     etc/docroot/files/WebGuiStyleSheet.css \
@@ -30,7 +31,8 @@ HEADERS += \
     src/requestmapper.h \
     src/datatemplatecontrollerTouchPanel.h \
     src/datatemplatecontrollerMainSite.h \
-    src/gpiocontroller.h
+    src/gpiocontroller.h \
+    src/webguiinputcontroller.h
 
 # includes
 include(../StudioKontrollerWeb/QtWebApp/httpserver/httpserver.pri)

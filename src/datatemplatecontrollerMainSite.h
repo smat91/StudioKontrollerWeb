@@ -11,6 +11,7 @@ class DataTemplateControllerMainSite: public HttpRequestHandler {
 public:
     DataTemplateControllerMainSite(QObject* parent=0);
     void service(GuiParameters* guiPar, HttpRequest& request, HttpResponse& response);
+
 private:
     QList<QString> list;
 };

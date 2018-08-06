@@ -18,7 +18,7 @@
 	<div  class="divControlls" id="divLighting" http-equiv="refresh" content="2">
 		<label class="labelButtons" for="divLighting">Deckenbeleuchtung</label>
 		<form method="POST" action="/files/TouchPanel">
-                        <input type="submit" onClick="setInLighting()" class="{valLighting}" value="EIN/AUS"  id= "buttonTouchPanel"/>
+			<input id="TouchButton" type="submit" onClick="setInLighting()" class="{valLighting}" value="EIN/AUS"/>
 			<input type="hidden" name="inLighting" id="inLightingId"/>
 			<script>
 				function setInLighting(){
