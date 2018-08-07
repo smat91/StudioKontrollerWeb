@@ -60,20 +60,18 @@ void GpioController::GetRGB()
 
     if ( guiParametersInt.ColorChangeOnOff )
     {
-        if ( Hue_Change <= 359.0 )
-        {
-            Hue_Change = Hue_Change + (0.02 * guiParametersInt.Speed);
+        if ( Hue_Change <= 1.0){
+            Hue_Change = Hue_Change + (0.00001 * (guiParametersInt.Speed));
         }
         else
         {
             Hue_Change = 0.0;
         }
-        ColorHSV.setHsv(Hue_Change, 255, 255, 255);
+        ColorHSV.setHsvF(Hue_Change, 1.0, 1.0, 1.0);
     }
 
     // convert HSV in RGB
     ColorRGB = ColorHSV.toRgb();
-
 }
 
 
