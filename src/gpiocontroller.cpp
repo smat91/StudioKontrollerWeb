@@ -61,7 +61,7 @@ void GpioController::GetRGB()
     if ( guiParametersInt.ColorChangeOnOff )
     {
         if ( Hue_Change <= 1.0){
-            Hue_Change = Hue_Change + (0.00001 * (guiParametersInt.Speed));
+            Hue_Change = Hue_Change + (0.0001 * (guiParametersInt.Speed));
         }
         else
         {
