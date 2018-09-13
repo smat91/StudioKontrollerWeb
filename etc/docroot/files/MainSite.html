@@ -119,7 +119,7 @@
 							<div class="divSliders">
 								<div class="divSlider">
 									<hr class="hrSlider" id="hrHue">
-                                                                        <input onClick="setInHue()" type="range" min="0" max="360" value="{valHue}" class="slider" name="inHue" id="Hue">
+                                                                        <input onChange="setInHue()" type="range" min="0" max="360" value="{valHue}" class="slider" name="inHue" id="Hue">
                                                                         <input type="hidden" name="inHueChange" id="inHueChangeId" />
                                                                         <script>
                                                                                 function setInHue(){
@@ -132,7 +132,7 @@
 								</div>
 								<div class="divSlider">
 									<hr class="hrSlider" id="hrSaturation">
-                                                                        <input onClick="setInSaturation()" type="range" min="0" max="255" value="{valSaturation}" class="slider" name="inSaturation" id="Saturation">
+                                                                        <input onChange="setInSaturation()" type="range" min="0" max="255" value="{valSaturation}" class="slider" name="inSaturation" id="Saturation">
                                                                         <input type="hidden" name="inSaturationChange" id="inSaturationChangeId" />
                                                                         <script>
                                                                                 function setInSaturation(){
@@ -145,7 +145,7 @@
 								</div>	
 								<div class="divSlider">	
                                                                         <hr class="hrSlider" id="hrValue">
-                                                                        <input onClick="setInValue()" type="range" min="0" max="255" value="{valValue}" class="slider" name="inValue" id="value">
+                                                                        <input onChange="setInValue()" type="range" min="0" max="255" value="{valValue}" class="slider" name="inValue" id="value">
                                                                         <input type="hidden" name="inValueChange" id="inValueChangeId" />
                                                                         <script>
                                                                                 function setInValue(){
@@ -177,7 +177,7 @@
 							<div class="divSliders">
 								<div class="divSlider">
 									<div class="divSlider" id="divSpeed">Geschwindigkeit</div>
-                                                                        <input onClick="setInSpeed()" type="range" min="1" max="100" value="{valSpeed}" class="slider" name="inSpeed" id="Speed">
+                                                                        <input onChange="setInSpeed()" type="range" min="1" max="100" value="{valSpeed}" class="slider" name="inSpeed" id="Speed">
                                                                         <input type="hidden" name="inSpeedChange" id="inSpeedChangeId" />
                                                                         <script>
                                                                                 function setInSpeed(){
@@ -198,12 +198,40 @@
 			<div id="divShutdown">
 				<block  class="divShutdownControlls" id="idShutdown" >
 						<form method="POST" action="/files/MainSite">
-							<input id="ShutdownButton" type="submit" onClick="setInShutdown()" value="off"/>
+							<input id="ShutdownButton" type="submit" onClick="setInShutdown()" value="pi off"/>
 							<input type="hidden" name="inShutdown" id="inShutdownId"/>
 							<script>
 								function setInShutdown(){
 									if (document.getElementById('inShutdownId').value != "true") {
 										document.getElementById('inShutdownId').value = "true";	
+									}
+								window.location.reload(false); 
+								}
+							</script>
+						</form>
+				</block>
+			</div>
+			<div id="divOnOff">
+				<block  class="divOnOffControlls" id="idOnOff" >
+						<form method="POST" action="/files/MainSite">
+							<input id="OnButton" type="submit" onClick="setInOn()" value="all on"/>
+							<input type="hidden" name="inOn" id="inOnId"/>
+							<script>
+								function setInOn(){
+									if (document.getElementById('inOnId').value != "true") {
+										document.getElementById('inOnId').value = "true";	
+									}
+								window.location.reload(false); 
+								}
+							</script>
+						</form>
+						<form method="POST" action="/files/MainSite">
+							<input id="OffButton" type="submit" onClick="setInOff()" value="all off"/>
+							<input type="hidden" name="inOff" id="inOnId"/>
+							<script>
+								function setInOn(){
+									if (document.getElementById('inOffId').value != "true") {
+										document.getElementById('inOffId').value = "true";	
 									}
 								window.location.reload(false); 
 								}
