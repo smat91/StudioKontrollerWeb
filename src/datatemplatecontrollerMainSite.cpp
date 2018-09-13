@@ -18,7 +18,7 @@ void DataTemplateControllerMainSite::service(GuiParameters* guiPar, HttpRequest 
     QByteArray inNeonFlexOnOff=request.getParameter("inNeonFlexOnOff");
     QByteArray inColorSelectionOnOff=request.getParameter("inColorSelectionOnOff");
     QByteArray inColorChangeOnOff=request.getParameter("inColorChangeOnOff");
-    QByteArray inShutdown=request.getParameter("inShutdown");
+    QByteArray inShutdown=request.getParameter("inShutdownChange");
     QByteArray inHue=request.getParameter("inHue");
     QByteArray inSaturation=request.getParameter("inSaturation");
     QByteArray inValue=request.getParameter("inValue");
@@ -27,6 +27,8 @@ void DataTemplateControllerMainSite::service(GuiParameters* guiPar, HttpRequest 
     QByteArray inSaturationChange=request.getParameter("inSaturationChange");
     QByteArray inValueChange=request.getParameter("inValueChange");
     QByteArray inSpeedChange=request.getParameter("inSpeedChange");
+    QByteArray inOn=request.getParameter("inOnChange");
+    QByteArray inOff=request.getParameter("inOffChange");
 
     QByteArray language=request.getHeader("Accept-Language");
     response.setHeader("Content-Type", "text/html; charset=UTF-8");
@@ -71,5 +73,34 @@ void DataTemplateControllerMainSite::service(GuiParameters* guiPar, HttpRequest 
         system("sudo shutdown -P now");
     }
 
+    // all on
+    if (inOn == "true") {
+        guiPar->LightingOnOff       = true;
+        guiPar->SignOnOff           = true;
+        guiPar->WallplugLOnOff      = true;
+        guiPar->WallplugROnOff      = true;
+        guiPar->NeonflexOnOff       = true;
+        guiPar->ColorSelectionOnOff = true;
+        guiPar->ColorChangeOnOff    = false;
+        guiPar->HSV_hue             = 0;
+        guiPar->HSV_saturation      = 0;
+        guiPar->HSV_value           = 255;
+        guiPar->Speed               = 0;
+    }
+
+    // all off
+    if (inOff == "true") {
+        guiPar->LightingOnOff       = false;
+        guiPar->SignOnOff           = false;
+        guiPar->WallplugLOnOff      = false;
+        guiPar->WallplugROnOff      = false;
+        guiPar->NeonflexOnOff       = false;
+        guiPar->ColorSelectionOnOff = false;
+        guiPar->ColorChangeOnOff    = false;
+        guiPar->HSV_hue             = 0;
+        guiPar->HSV_saturation      = 0;
+        guiPar->HSV_value           = 0;
+        guiPar->Speed               = 0;
+    }
     response.write(t.toUtf8(),true);
 }

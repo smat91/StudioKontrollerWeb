@@ -199,7 +199,7 @@
 				<block  class="divShutdownControlls" id="idShutdown" >
 						<form method="POST" action="/files/MainSite">
 							<input id="ShutdownButton" type="submit" onClick="setInShutdown()" value="pi off"/>
-							<input type="hidden" name="inShutdown" id="inShutdownId"/>
+                                                        <input type="hidden" name="inShutdownChange" id="inShutdownId"/>
 							<script>
 								function setInShutdown(){
 									if (document.getElementById('inShutdownId').value != "true") {
