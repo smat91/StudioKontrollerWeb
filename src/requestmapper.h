@@ -14,6 +14,8 @@ class RequestMapper : public HttpRequestHandler {
     Q_OBJECT
 public:
     RequestMapper(GuiParameters* guiPar, QObject* parent=0);
+    ~RequestMapper();
+
     void service(HttpRequest& request, HttpResponse& response);
     static TemplateCache* templateCache;
     static StaticFileController* staticFileController;

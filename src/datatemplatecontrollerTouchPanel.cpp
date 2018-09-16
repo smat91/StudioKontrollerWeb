@@ -8,6 +8,10 @@ DataTemplateControllerTouchPanel::DataTemplateControllerTouchPanel(QObject* pare
 
 }
 
+DataTemplateControllerTouchPanel::~DataTemplateControllerTouchPanel()
+{
+}
+
 void DataTemplateControllerTouchPanel::service(GuiParameters* guiPar, HttpRequest &request, HttpResponse &response) {
 
     // get values form webui

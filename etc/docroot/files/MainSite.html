@@ -215,10 +215,10 @@
 				<block  class="divOnOffControlls" id="idOnOff" >
 						<form method="POST" action="/files/MainSite">
 							<input id="OnButton" type="submit" onClick="setInOn()" value="all on"/>
-							<input type="hidden" name="inOn" id="inOnId"/>
+                                                        <input type="hidden" name="inOnChange" id="inOnId"/>
 							<script>
-								function setInOn(){
-									if (document.getElementById('inOnId').value != "true") {
+                                                                function setInOn(){
+                                                                        if (document.getElementById('inOnId').value != "true") {
 										document.getElementById('inOnId').value = "true";	
 									}
 								window.location.reload(false); 
@@ -227,11 +227,11 @@
 						</form>
 						<form method="POST" action="/files/MainSite">
 							<input id="OffButton" type="submit" onClick="setInOff()" value="all off"/>
-							<input type="hidden" name="inOff" id="inOnId"/>
+                                                        <input type="hidden" name="inOffChange" id="inOffId"/>
 							<script>
-								function setInOn(){
-									if (document.getElementById('inOffId').value != "true") {
-										document.getElementById('inOffId').value = "true";	
+                                                                function setInOff(){
+                                                                        if (document.getElementById('inOffId').value != "true") {
+                                                                                document.getElementById('inOffId').value = "true";
 									}
 								window.location.reload(false); 
 								}
@@ -243,27 +243,23 @@
 	</div>
 	<script>
 		if (document.getElementById('ColorChange').className == "true") {
-			document.getElementById('ColorSelection').disabled = true;
-                        document.getElementById('SetColorSelection').disabled = true;
+                        document.getElementById('ColorSelection').disabled = true;
 			document.getElementById('Hue').disabled = true;
 			document.getElementById('Saturation').disabled = true;
 			document.getElementById('value').disabled = true;
 		}
 		else {
-			document.getElementById('ColorSelection').disabled = false;
-                        document.getElementById('SetColorSelection').disabled = false;
+                        document.getElementById('ColorSelection').disabled = false;
 			document.getElementById('Hue').disabled = false;
 			document.getElementById('Saturation').disabled = false;
 			document.getElementById('value').disabled = false;
 		}
 		if (document.getElementById('ColorSelection').className == "true") {
-			document.getElementById('ColorChange').disabled = true;
-                        document.getElementById('SetColorChange').disabled = true;
+                        document.getElementById('ColorChange').disabled = true;
 			document.getElementById('Speed').disabled = true;
 		}
 		else {
-			document.getElementById('ColorChange').disabled = false;
-                        document.getElementById('SetColorChange').disabled = false;
+                        document.getElementById('ColorChange').disabled = false;
 			document.getElementById('Speed').disabled = false;
 		}
 	</script>

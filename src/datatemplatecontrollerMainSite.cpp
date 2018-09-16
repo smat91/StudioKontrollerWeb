@@ -8,6 +8,10 @@ DataTemplateControllerMainSite::DataTemplateControllerMainSite(QObject* parent)
 
 }
 
+DataTemplateControllerMainSite::~DataTemplateControllerMainSite()
+{
+}
+
 void DataTemplateControllerMainSite::service(GuiParameters* guiPar, HttpRequest &request, HttpResponse &response) {
 
     // get values form webui
@@ -34,6 +38,36 @@ void DataTemplateControllerMainSite::service(GuiParameters* guiPar, HttpRequest 
     response.setHeader("Content-Type", "text/html; charset=UTF-8");
 
     Template t=RequestMapper::templateCache->getTemplate("files/MainSite",language);
+
+    // all on
+    if (inOn == "true") {
+        guiPar->LightingOnOff       = true;     t.setVariable("valLighting","true");
+        guiPar->SignOnOff           = true;     t.setVariable("valInfoSign","true");
+        guiPar->WallplugLOnOff      = true;     t.setVariable("valWallPlugLeft","true");
+        guiPar->WallplugROnOff      = true;     t.setVariable("valWallPlugRight","true");
+        guiPar->NeonflexOnOff       = true;     t.setVariable("valNeonFlexOnOff","true");
+        guiPar->ColorSelectionOnOff = true;     t.setVariable("valColorSelectionOnOff","true");
+        guiPar->ColorChangeOnOff    = false;    t.setVariable("valColorChangeOnOff","false");
+        guiPar->HSV_hue             = 0;        t.setVariable("valHue","0");
+        guiPar->HSV_saturation      = 0;        t.setVariable("valSaturation","0");
+        guiPar->HSV_value           = 255;      t.setVariable("valValue","255");
+        guiPar->Speed               = 0;        t.setVariable("valSpeed","0");
+    }
+
+    // all off
+    if (inOff == "true") {
+        guiPar->LightingOnOff       = false;    t.setVariable("valLighting","false");
+        guiPar->SignOnOff           = false;    t.setVariable("valInfoSign","false");
+        guiPar->WallplugLOnOff      = false;    t.setVariable("valWallPlugLeft","false");
+        guiPar->WallplugROnOff      = false;    t.setVariable("valWallPlugRight","false");
+        guiPar->NeonflexOnOff       = false;    t.setVariable("valNeonFlexOnOff","false");
+        guiPar->ColorSelectionOnOff = false;    t.setVariable("valColorSelectionOnOff","false");
+        guiPar->ColorChangeOnOff    = false;    t.setVariable("valColorChangeOnOff","false");
+        guiPar->HSV_hue             = 0;        t.setVariable("valHue","0");
+        guiPar->HSV_saturation      = 0;        t.setVariable("valSaturation","0");
+        guiPar->HSV_value           = 0;        t.setVariable("valValue","0");
+        guiPar->Speed               = 0;        t.setVariable("valSpeed","0");
+    }
 
     // process value for lighting
     guiPar->LightingOnOff = Button(inLighting, "valLighting", &t, guiPar->LightingOnOff).out();
@@ -70,37 +104,8 @@ void DataTemplateControllerMainSite::service(GuiParameters* guiPar, HttpRequest 
 
     // shutdown system
     if (inShutdown == "true") {
-        system("sudo shutdown -P now");
+        system("sudo shutdown -h now");
     }
 
-    // all on
-    if (inOn == "true") {
-        guiPar->LightingOnOff       = true;
-        guiPar->SignOnOff           = true;
-        guiPar->WallplugLOnOff      = true;
-        guiPar->WallplugROnOff      = true;
-        guiPar->NeonflexOnOff       = true;
-        guiPar->ColorSelectionOnOff = true;
-        guiPar->ColorChangeOnOff    = false;
-        guiPar->HSV_hue             = 0;
-        guiPar->HSV_saturation      = 0;
-        guiPar->HSV_value           = 255;
-        guiPar->Speed               = 0;
-    }
-
-    // all off
-    if (inOff == "true") {
-        guiPar->LightingOnOff       = false;
-        guiPar->SignOnOff           = false;
-        guiPar->WallplugLOnOff      = false;
-        guiPar->WallplugROnOff      = false;
-        guiPar->NeonflexOnOff       = false;
-        guiPar->ColorSelectionOnOff = false;
-        guiPar->ColorChangeOnOff    = false;
-        guiPar->HSV_hue             = 0;
-        guiPar->HSV_saturation      = 0;
-        guiPar->HSV_value           = 0;
-        guiPar->Speed               = 0;
-    }
     response.write(t.toUtf8(),true);
 }

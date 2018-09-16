@@ -8,6 +8,10 @@ RequestMapper::RequestMapper(GuiParameters* guiPar, QObject* parent)
     GuiPar = guiPar;
 }
 
+RequestMapper::~RequestMapper()
+{
+}
+
 void RequestMapper::service(HttpRequest& request, HttpResponse& response) {
     QByteArray path=request.getPath();
     qDebug("RequestMapper: path=%s",path.data());

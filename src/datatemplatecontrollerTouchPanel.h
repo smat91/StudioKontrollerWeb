@@ -10,6 +10,8 @@ class DataTemplateControllerTouchPanel: public HttpRequestHandler {
     Q_OBJECT
 public:
     DataTemplateControllerTouchPanel(QObject* parent=0);
+    ~DataTemplateControllerTouchPanel();
+
     void service(GuiParameters* guiPar, HttpRequest& request, HttpResponse& response);
 private:
     QList<QString> list;

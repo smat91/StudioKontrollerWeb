@@ -10,6 +10,8 @@ class DataTemplateControllerMainSite: public HttpRequestHandler {
     Q_OBJECT
 public:
     DataTemplateControllerMainSite(QObject* parent=0);
+    ~DataTemplateControllerMainSite();
+
     void service(GuiParameters* guiPar, HttpRequest& request, HttpResponse& response);
 
 private:

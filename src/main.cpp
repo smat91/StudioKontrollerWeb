@@ -98,7 +98,5 @@ int main(int argc, char *argv[])
     fileSettings->beginGroup("files");
     RequestMapper::staticFileController=new StaticFileController(fileSettings,&app);
 
-
-
     return app.exec();
 }
