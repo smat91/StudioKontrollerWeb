@@ -5,19 +5,21 @@
 #include "customdatatypes.h"
 #include "pigpiod_if2.h"
 
-GpioController::GpioController(GuiParameters& guiParameters, QObject *parent) :
+GpioController::GpioController(guiParameters& guiPar, QObject *parent) :
     QObject(parent),
-    guiParametersInt(guiParameters)
+    guiPar_(guiPar),
+    colorHSV(Qt::white),
+    colorRGB(Qt::white),
+    hueChange(0.0),
+    pi(0)
 {
-
     // init timer
-    QTimer *timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(TimerLoop()));
+    QTimer* timer {new QTimer(this)};
+    connect(timer, SIGNAL(timeout()), this, SLOT(timerLoop()));
     timer->start(200);
 
     // start communication with gpio daemon and set pin modes
-    char ip[]="192.168.0.3";
-
+    char ip[] {"192.168.0.3"};
     pi = pigpio_start(ip, NULL);
 
 }
@@ -25,21 +27,21 @@ GpioController::GpioController(GuiParameters& guiParameters, QObject *parent) :
 GpioController::~GpioController()
 {
     // reset pwm outputs
-    set_PWM_dutycycle(pi, GPIO_Red, 0);
-    set_PWM_dutycycle(pi, GPIO_Green, 0);
-    set_PWM_dutycycle(pi, GPIO_Blue, 0);
+    set_PWM_dutycycle(pi, GPIO_RED, 0);
+    set_PWM_dutycycle(pi, GPIO_GREEN, 0);
+    set_PWM_dutycycle(pi, GPIO_BLUE, 0);
 
     // reset lightning output
-    gpio_write(pi, GPIO_Light, false);
+    gpio_write(pi, GPIO_LIGHT, false);
 
     // reset wall plug left output
-    gpio_write(pi, GPIO_WallPlugL, false);
+    gpio_write(pi, GPIO_WALL_PLUG_LEFT, false);
 
     // reset wall plug right output
-    gpio_write(pi, GPIO_WallPlugR, false);
+    gpio_write(pi, GPIO_WALL_PLUG_RIGHT, false);
 
     // reset info sign output
-    gpio_write(pi, GPIO_Sign, false);
+    gpio_write(pi, GPIO_SIGN, false);
 
     // stop communication with gpio daemon
     pigpio_stop(pi);
@@ -49,70 +51,72 @@ GpioController::~GpioController()
 // get RGB color from HSV
 //-------------------------------------------------------------------
 
-void GpioController::GetRGB()
+void GpioController::getRGB()
 {
 
     // color selection mode
-    if ( guiParametersInt.ColorSelectionOnOff )
+    if (guiPar_.colorSelectionOnOff)
     {
-        ColorHSV.setHsv(guiParametersInt.HSV_hue, guiParametersInt.HSV_saturation, guiParametersInt.HSV_value, 255);
+        colorHSV.setHsv(guiPar_.hsvHue, guiPar_.hsvSaturation, guiPar_.hsvValue, 255);
     }
 
-    if ( guiParametersInt.ColorChangeOnOff )
+    // color change mode
+    if (guiPar_.colorChangeOnOff)
     {
-        if ( Hue_Change <= 1.0){
-            Hue_Change = Hue_Change + (0.0001 * (guiParametersInt.Speed));
+        if (hueChange <= 1.0)
+        {
+            hueChange = hueChange + (0.0001 * (guiPar_.speed));
         }
         else
         {
-            Hue_Change = 0.0;
+            hueChange = 0.0;
         }
-        ColorHSV.setHsvF(Hue_Change, 1.0, 1.0, 1.0);
+        colorHSV.setHsvF(hueChange, 1.0, 1.0, 1.0);
     }
 
     // convert HSV in RGB
-    ColorRGB = ColorHSV.toRgb();
+    colorRGB = colorHSV.toRgb();
 }
 
 
 // slot to update gpio's
 //-------------------------------------------------------------------
 
-void GpioController::UpdateOutputs()
+void GpioController::updateOutputs()
 {
     // set neonflex outputs
-    if (guiParametersInt.NeonflexOnOff)
+    if (guiPar_.neonFlexOnOff)
     {
-        set_PWM_dutycycle(pi, GPIO_Red, ( 255 - ColorRGB.red()));
-        set_PWM_dutycycle(pi, GPIO_Green, ( 255 - ColorRGB.green()));
-        set_PWM_dutycycle(pi, GPIO_Blue, ( 255 - ColorRGB.blue()));
+        set_PWM_dutycycle(pi, GPIO_RED, ( 255 - colorRGB.red()));
+        set_PWM_dutycycle(pi, GPIO_GREEN, ( 255 - colorRGB.green()));
+        set_PWM_dutycycle(pi, GPIO_BLUE, ( 255 - colorRGB.blue()));
     }
     else
     {
-        set_PWM_dutycycle(pi, GPIO_Red, 255);
-        set_PWM_dutycycle(pi, GPIO_Green, 255);
-        set_PWM_dutycycle(pi, GPIO_Blue, 255);
+        set_PWM_dutycycle(pi, GPIO_RED, 255);
+        set_PWM_dutycycle(pi, GPIO_GREEN, 255);
+        set_PWM_dutycycle(pi, GPIO_BLUE, 255);
     }
 
 
     // set lightning output
-    gpio_write(pi, GPIO_Light, guiParametersInt.LightingOnOff);
+    gpio_write(pi, GPIO_LIGHT, guiPar_.lightingOnOff);
 
     // set wall plug left output
-    gpio_write(pi, GPIO_WallPlugL, guiParametersInt.WallplugLOnOff);
+    gpio_write(pi, GPIO_WALL_PLUG_LEFT, guiPar_.wallPlugLeftOnOff);
 
     // set wall plug right output
-    gpio_write(pi, GPIO_WallPlugR, guiParametersInt.WallplugROnOff);
+    gpio_write(pi, GPIO_WALL_PLUG_RIGHT, guiPar_.wallPlugRightOnOff);
 
     // set info sign output
-    gpio_write(pi, GPIO_Sign, guiParametersInt.SignOnOff);
+    gpio_write(pi, GPIO_SIGN, guiPar_.signOnOff);
 }
 
 
 // main loop [200ms cycle time]
 //-------------------------------------------------------------------
-void GpioController::TimerLoop()
+void GpioController::timerLoop()
 {
-    GetRGB();
-    UpdateOutputs();
+    getRGB();
+    updateOutputs();
 }

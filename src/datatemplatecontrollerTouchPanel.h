@@ -6,13 +6,15 @@
 
 using namespace stefanfrings;
 
-class DataTemplateControllerTouchPanel: public HttpRequestHandler {
+class DataTemplateControllerTouchPanel: public HttpRequestHandler
+{
     Q_OBJECT
 public:
-    DataTemplateControllerTouchPanel(QObject* parent=0);
+    DataTemplateControllerTouchPanel(QObject* parent = nullptr);
     ~DataTemplateControllerTouchPanel();
 
-    void service(GuiParameters* guiPar, HttpRequest& request, HttpResponse& response);
+    void service(guiParameters* guiPar, HttpRequest& request, HttpResponse& response);
+
 private:
     QList<QString> list;
 };

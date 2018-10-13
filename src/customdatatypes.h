@@ -1,20 +1,20 @@
 #ifndef CUSTOMDATATYPES_H
 #define CUSTOMDATATYPES_H
 
-struct GuiParameters
+struct guiParameters
 {
-    int HSV_hue;
-    int HSV_saturation;
-    int HSV_value;
-    int Speed;
+    int hsvHue;
+    int hsvSaturation;
+    int hsvValue;
+    int speed;
 
-    bool NeonflexOnOff;
-    bool ColorChangeOnOff;
-    bool ColorSelectionOnOff;
-    bool LightingOnOff;
-    bool WallplugLOnOff;
-    bool WallplugROnOff;
-    bool SignOnOff;
+    bool neonFlexOnOff;
+    bool colorChangeOnOff;
+    bool colorSelectionOnOff;
+    bool lightingOnOff;
+    bool wallPlugLeftOnOff;
+    bool wallPlugRightOnOff;
+    bool signOnOff;
 };
 
 #endif // CUSTOMDATATYPES_H

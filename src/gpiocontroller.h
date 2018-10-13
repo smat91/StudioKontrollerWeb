@@ -1,13 +1,14 @@
 #ifndef GPIOCONTROLLER_H
 #define GPIOCONTROLLER_H
 
-#define GPIO_Red 17
-#define GPIO_Green 27
-#define GPIO_Blue 22
-#define GPIO_Light 5
-#define GPIO_WallPlugL 6
-#define GPIO_WallPlugR 13
-#define GPIO_Sign 19
+// defines for used gpio pins
+#define GPIO_RED 17
+#define GPIO_GREEN 27
+#define GPIO_BLUE 22
+#define GPIO_LIGHT 5
+#define GPIO_WALL_PLUG_LEFT 6
+#define GPIO_WALL_PLUG_RIGHT 13
+#define GPIO_SIGN 19
 
 // includes
 //-------------------------------------------------------------------
@@ -23,27 +24,24 @@ class GpioController : public QObject
 {
     Q_OBJECT
 public:
-    explicit GpioController(GuiParameters& guiParameters, QObject *parent = 0);
+    explicit GpioController(guiParameters& guiPar, QObject* parent = nullptr);
     ~GpioController();
 
+    guiParameters& guiPar_;
+
+    QColor colorHSV;
+    QColor colorRGB;
+
+    float hueChange;
     int pi;
 
-    GuiParameters& guiParametersInt;
-
-    float Hue_Change;
-
-    QColor ColorHSV = Qt::white;
-    QColor ColorRGB = Qt::white;
-
 public slots:
-    void TimerLoop();
-
+    void timerLoop();
 
 private:
 
-    void GetRGB();
-
-    void UpdateOutputs();
+    void getRGB();
+    void updateOutputs();
 };
 
 #endif // GPIOCONTROLLER_H

@@ -6,13 +6,14 @@
 
 using namespace stefanfrings;
 
-class DataTemplateControllerMainSite: public HttpRequestHandler {
+class DataTemplateControllerMainSite: public HttpRequestHandler
+{
     Q_OBJECT
 public:
-    DataTemplateControllerMainSite(QObject* parent=0);
+    DataTemplateControllerMainSite(QObject* parent = nullptr);
     ~DataTemplateControllerMainSite();
 
-    void service(GuiParameters* guiPar, HttpRequest& request, HttpResponse& response);
+    void service(guiParameters* guiPar, HttpRequest& request, HttpResponse& response);
 
 private:
     QList<QString> list;

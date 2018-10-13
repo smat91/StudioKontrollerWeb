@@ -8,8 +8,11 @@ WebGuiInputController::~WebGuiInputController()
 {
 }
 
-Button::Button(QByteArray inGuiState, QByteArray GuiVarName, Template* SiteTemplate, bool GpioState)
-    :GuiState_(inGuiState), GuiVarName_(GuiVarName), SiteTemplate_(SiteTemplate), GpioState_(GpioState)
+Button::Button(QByteArray guiState, QByteArray guiVarName, Template* siteTemplate, bool gpioState):
+    guiState_(guiState),
+    guiVarName_(guiVarName),
+    siteTemplate_(siteTemplate),
+    gpioState_(gpioState)
 {
 }
 
@@ -20,31 +23,41 @@ Button::~Button()
 bool Button::out()
 {
     // process value
-    if (GuiState_ == "true") {
-        if (GpioState_ == false) {
-            GpioState_ = true;
-            SiteTemplate_->setVariable(GuiVarName_,"true");
+    if (guiState_ == "true")
+    {
+        if (gpioState_ == false)
+        {
+            gpioState_ = true;
+            siteTemplate_->setVariable(guiVarName_,"true");
         }
-        else {
-            GpioState_ = false;
-            SiteTemplate_->setVariable(GuiVarName_,"false");
+        else
+        {
+            gpioState_ = false;
+            siteTemplate_->setVariable(guiVarName_,"false");
         }
     }
-    else {
-        if (GpioState_ == false) {
-            SiteTemplate_->setVariable(GuiVarName_,"false");
+    else
+    {
+        if (gpioState_ == false)
+        {
+            siteTemplate_->setVariable(guiVarName_,"false");
         }
-        else {
-            SiteTemplate_->setVariable(GuiVarName_,"true");
+        else
+        {
+            siteTemplate_->setVariable(guiVarName_,"true");
         }
     }
 
-    return GpioState_;
+    return gpioState_;
 }
 
 
-Slider::Slider(QByteArray inGuiState, QByteArray GuiValue, QByteArray GuiVarName, Template* SiteTemplate, int GpioState)
-    :GuiState_(inGuiState), GuiValue_(GuiValue), GuiVarName_(GuiVarName), SiteTemplate_(SiteTemplate), GpioState_(GpioState)
+Slider::Slider(QByteArray guiState, QByteArray guiValue, QByteArray guiVarName, Template* siteTemplate, int gpioState):
+    guiState_(guiState),
+    guiValue_(guiValue),
+    guiVarName_(guiVarName),
+    siteTemplate_(siteTemplate),
+    gpioState_(gpioState)
 {
 }
 
@@ -55,15 +68,15 @@ Slider::~Slider()
 int Slider::out()
 {
     // process value
-    if (GuiState_ == "true") {
-        GpioState_ = QString(GuiValue_).toInt();
-        QString valValue = QString::number(GpioState_);
-        SiteTemplate_->setVariable(GuiVarName_, valValue );
+    if (guiState_ == "true") {
+        gpioState_ = QString(guiValue_).toInt();
+        QString valValue {QString::number(gpioState_)};
+        siteTemplate_->setVariable(guiVarName_, valValue );
     }
     else {
-        QString valValue = QString::number(GpioState_);
-        SiteTemplate_->setVariable(GuiVarName_, valValue);
+        QString valValue {QString::number(gpioState_)};
+        siteTemplate_->setVariable(guiVarName_, valValue);
     }
 
-    return GpioState_;
+    return gpioState_;
 }

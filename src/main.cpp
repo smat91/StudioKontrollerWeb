@@ -15,27 +15,34 @@
 // namespaces
 using namespace stefanfrings;
 
-/**
- * Search the configuration file.
- * Aborts the application if not found.
- * @return The valid filename
- */
-QString searchConfigFile() {
-    QString binDir=QCoreApplication::applicationDirPath();
-    QString appName=QCoreApplication::applicationName();
+// Set the configuration file.
+// Aborts the application if not found.
+// @return The valid filename
+QString setConfigFile()
+{
+    QString binDir {QCoreApplication::applicationDirPath()};
+    QString appName {QCoreApplication::applicationName()};
     QFile file;
+
+    // set pat
     file.setFileName(binDir+"/WebApp.ini");
-    if (!file.exists()) {
+    if (!file.exists())
+    {
         file.setFileName(binDir+"/etc/WebApp.ini");
-        if (!file.exists()) {
+        if (!file.exists())
+        {
             file.setFileName(binDir+"/../etc/WebApp.ini");
-            if (!file.exists()) {
+            if (!file.exists())
+            {
                 file.setFileName(binDir+"/../"+appName+"/etc/WebApp.ini");
-                if (!file.exists()) {
+                if (!file.exists())
+                {
                     file.setFileName(binDir+"/../../"+appName+"/etc/WebApp.ini");
-                    if (!file.exists()) {
+                    if (!file.exists())
+                    {
                         file.setFileName(binDir+"/../../../../../"+appName+"/etc/WebApp.ini");
-                        if (!file.exists()) {
+                        if (!file.exists())
+                        {
                             file.setFileName(QDir::rootPath()+"etc/WebApp.ini");
                         }
                     }
@@ -43,60 +50,65 @@ QString searchConfigFile() {
             }
         }
     }
-    if (file.exists()) {
-        QString configFileName=QDir(file.fileName()).canonicalPath();
+
+    // check if file exists
+    if (file.exists())
+    {
+        QString configFileName {QDir(file.fileName()).canonicalPath()};
         qDebug("using config file %s", qPrintable(configFileName));
         return configFileName;
     }
-    else {
+    else
+    {
         qFatal("config file not found");
     }
 }
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
-    static bool init = false;
-
-    GuiParameters GuiPar;
-
+    static bool init {false};
+    guiParameters guiPar;
     QCoreApplication app(argc, argv);
 
-    new GpioController(GuiPar, &app);
+    // init guiPar
+    if (!init)
+    {
+        guiPar.hsvHue = 0;
+        guiPar.hsvSaturation = 255;
+        guiPar.hsvValue = 255;
+        guiPar.speed = 100;
 
-    if (!init) {
-        GuiPar.HSV_hue = 0;
-        GuiPar.HSV_saturation = 255;
-        GuiPar.HSV_value = 255;
-        GuiPar.Speed = 100;
-
-        GuiPar.NeonflexOnOff = false;
-        GuiPar.ColorChangeOnOff = false;
-        GuiPar.ColorSelectionOnOff = false;
-        GuiPar.LightingOnOff = false;
-        GuiPar.WallplugLOnOff = false;
-        GuiPar.WallplugROnOff = false;
-        GuiPar.SignOnOff = false;
+        guiPar.neonFlexOnOff = false;
+        guiPar.colorChangeOnOff = false;
+        guiPar.colorSelectionOnOff = false;
+        guiPar.lightingOnOff = false;
+        guiPar.wallPlugLeftOnOff = false;
+        guiPar.wallPlugRightOnOff = false;
+        guiPar.signOnOff = false;
 
         init = true;
     }
 
     // Load the configuration file
-    QString configFileName=searchConfigFile();
-    QSettings* listenerSettings=new QSettings(configFileName, QSettings::IniFormat, &app);
+    QString configFileName {setConfigFile()};
+    QSettings* listenerSettings {new QSettings(configFileName, QSettings::IniFormat, &app)};
     listenerSettings->beginGroup("listener");
 
     // Start the HTTP server
-    new HttpListener(listenerSettings,new RequestMapper(&GuiPar, &app),&app);
+    new HttpListener(listenerSettings,new RequestMapper(&guiPar, &app),&app);
 
     // Configure template cache
-    QSettings* templateSettings=new QSettings(configFileName,QSettings::IniFormat,&app);
+    QSettings* templateSettings {new QSettings(configFileName,QSettings::IniFormat,&app)};
     templateSettings->beginGroup("templates");
-    RequestMapper::templateCache=new TemplateCache(templateSettings,&app);
+    RequestMapper::templateCache = new TemplateCache(templateSettings,&app);
 
     // Static file controller
     QSettings* fileSettings=new QSettings(configFileName,QSettings::IniFormat,&app);
     fileSettings->beginGroup("files");
-    RequestMapper::staticFileController=new StaticFileController(fileSettings,&app);
+    RequestMapper::staticFileController = new StaticFileController(fileSettings,&app);
+
+    // raspberry pi gpio controller
+    new GpioController(guiPar, &app);
 
     return app.exec();
 }

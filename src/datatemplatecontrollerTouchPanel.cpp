@@ -3,27 +3,28 @@
 #include "template.h"
 #include "webguiinputcontroller.h"
 
-DataTemplateControllerTouchPanel::DataTemplateControllerTouchPanel(QObject* parent)
-    : HttpRequestHandler(parent) {
-
+DataTemplateControllerTouchPanel::DataTemplateControllerTouchPanel(QObject* parent):
+    HttpRequestHandler(parent)
+{
 }
 
 DataTemplateControllerTouchPanel::~DataTemplateControllerTouchPanel()
 {
 }
 
-void DataTemplateControllerTouchPanel::service(GuiParameters* guiPar, HttpRequest &request, HttpResponse &response) {
+void DataTemplateControllerTouchPanel::service(guiParameters* guiPar, HttpRequest &request, HttpResponse &response)
+{
 
     // get values form webui
-    QByteArray inLighting=request.getParameter("inLighting");
+    QByteArray inLighting {request.getParameter("inLighting")};
 
-    QByteArray language=request.getHeader("Accept-Language");
+    QByteArray language {request.getHeader("Accept-Language")};
     response.setHeader("Content-Type", "text/html; charset=UTF-8");
 
-    Template t=RequestMapper::templateCache->getTemplate("files/TouchPanel",language);
+    Template touchPanel {RequestMapper::templateCache->getTemplate("files/TouchPanel",language)};
 
     // process value for lighting
-    guiPar->LightingOnOff = Button(inLighting, "valLighting", &t, guiPar->LightingOnOff).out();
+    guiPar->lightingOnOff = Button(inLighting, "valLighting", &touchPanel, guiPar->lightingOnOff).out();
 
-    response.write(t.toUtf8(),true);
+    response.write(touchPanel.toUtf8(),true);
 }

@@ -16,32 +16,32 @@ public:
 class Button : public WebGuiInputController
 {
 public:
-    Button(QByteArray GuiState, QByteArray GuiVarName, Template* SiteTemplate, bool GpioState);
+    Button(QByteArray guiState, QByteArray guiVarName, Template* siteTemplate, bool gpioState);
     virtual ~Button();
 
     virtual bool out();
 
 protected:
-    QByteArray GuiState_;
-    QByteArray GuiVarName_;
-    Template* SiteTemplate_;
-    bool GpioState_;
+    QByteArray guiState_;
+    QByteArray guiVarName_;
+    Template* siteTemplate_;
+    bool gpioState_;
 };
 
 class Slider : public WebGuiInputController
 {
 public:
-    Slider(QByteArray GuiState, QByteArray GuiValue, QByteArray GuiVarName, Template* SiteTemplate, int GpioState);
+    Slider(QByteArray guiState, QByteArray guiValue, QByteArray guiVarName, Template* siteTemplate, int gpioState);
     virtual ~Slider();
 
     virtual int out();
 
 protected:
-    QByteArray GuiState_;
-    QByteArray GuiValue_;
-    QByteArray GuiVarName_;
-    Template* SiteTemplate_;
-    int GpioState_;
+    QByteArray guiState_;
+    QByteArray guiValue_;
+    QByteArray guiVarName_;
+    Template* siteTemplate_;
+    int gpioState_;
 };
 
 #endif // WEBGUIINPUTCONTROLLER_H
