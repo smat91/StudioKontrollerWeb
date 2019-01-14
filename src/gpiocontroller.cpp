@@ -19,9 +19,12 @@ GpioController::GpioController(guiParameters& guiPar, QObject *parent) :
     timer->start(200);
 
     // start communication with gpio daemon and set pin modes
-    char ip[] {"192.168.0.3"};
-    pi = pigpio_start(ip, NULL);
+    pi = pigpio_start(NULL, NULL);
 
+    if (pi >= 0)
+    {
+        qDebug("connected to pigpiod");
+    }
 }
 
 GpioController::~GpioController()
